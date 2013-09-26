@@ -23,6 +23,8 @@
  */
 class Employer extends CActiveRecord
 {
+
+    public $verifyPassword;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -41,8 +43,8 @@ class Employer extends CActiveRecord
 		return array(
 			array('email, password', 'required'),
             array('email', 'email'),
-			array('email, password, fio', 'length', 'max'=>45),
-			array('password', 'compare', 'compareAttribute'=>'repeat_password', 'on'=>'create'),
+			array('email, password, fio', 'length', 'max'=>255),
+			array('password', 'compare', 'compareAttribute'=>'verifyPassword', 'on'=>'create'),
 			array('created_at, updated_at', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -71,7 +73,7 @@ class Employer extends CActiveRecord
 		return array(
 			'email' => 'Email',
 			'password' => 'Password',
-			'fio' => 'Fio',
+			'fio' => 'FIO',
 			'id_role' => 'Role',
 			'id_city' => 'City',
 		);
@@ -138,12 +140,14 @@ class Employer extends CActiveRecord
 
                 $date = date('Y-m-d H:i:s',time());
                 $this->created_at=$date;
+                $this->password = $this->cryptPassword($this->password);
                 return true;
             }
              else {
                  $date = date('Y-m-d H:i:s',time());
                  $this->updated_at=$date;
-                return true;
+                 $this->password = $this->cryptPassword($this->password);
+                 return true;
              }
         }
 
@@ -151,6 +155,9 @@ class Employer extends CActiveRecord
             return false;
     }
 
-
+    public function cryptPassword($password)
+    {
+        return crypt($password);
+    }
 
 }

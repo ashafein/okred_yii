@@ -72,20 +72,18 @@ class Company extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id_company' => 'Id Company',
-			'id_employer' => 'Id Employer',
-			'name' => 'Name',
-			'id_company_type' => 'Id Company Type',
-			'id_legal_type' => 'Id Legal Type',
+			'companyname' => 'Name',
+			'id_company_type' => 'Company Type',
+			'id_legal_type' => 'Company Legal Type',
 			'staff' => 'Staff',
 			'description' => 'Description',
 			'logo' => 'Logo',
 			'slogan' => 'Slogan',
 			'phone' => 'Phone',
 			'website' => 'Website',
-			'id_city' => 'Id City',
-			'created_at' => 'Created At',
-			'updated_at' => 'Updated At',
+			'idCity' => 'City',
+			'createdAt' => 'Created At',
+			'updatedAt' => 'Updated At',
 		);
 	}
 
