@@ -43,11 +43,11 @@ class Company extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+            array('name, id_legal_type' , 'required'),
 			array('id_employer, id_company_type, id_legal_type, staff, id_city', 'length', 'max'=>10),
 			array('name', 'length', 'max'=>200),
 			array('description, logo, slogan, website', 'length', 'max'=>1024),
 			array('phone', 'length', 'max'=>100),
-			array('created_at, updated_at', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id_company, id_employer, name, id_company_type, id_legal_type, staff, description, logo, slogan, phone, website, id_city, created_at, updated_at', 'safe', 'on'=>'search'),
@@ -72,7 +72,7 @@ class Company extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'companyname' => 'Name',
+			'name' => 'Name',
 			'id_company_type' => 'Company Type',
 			'id_legal_type' => 'Company Legal Type',
 			'staff' => 'Staff',

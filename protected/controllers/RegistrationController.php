@@ -52,21 +52,23 @@ class RegistrationController extends Controller {
         $data['employer'] = $employer;
         $data['company'] = $company;
         $data['user'] = 'employer';
-        //echo '<pre>';
-        //var_dump($data); die();
+       // echo '<pre>';
+       // var_dump($_POST); die();
 
         // If dat;a received
-        if(isset($_POST['Employer']))
+        if((isset($_POST['Employer'])) && (isset($_POST['Company'])))
         {
             // Safe attributes values assign
             $employer->attributes = $_POST['Employer'];
+            $company->attributes = $_POST['Company'];
 
             // Data validation before saving
-            if($employer->validate())
+            if(($employer->validate()) && ($company->validate()))
             {
                 // Save recieved data
                 // false is given for non forward second validation
                 $employer->save(false);
+                $company->save(false);
 
                 // redirect to  all employers list
                 $this->redirect($this->createUrl('employer/'));
@@ -74,10 +76,10 @@ class RegistrationController extends Controller {
         }
 
         // Render registration form
-        $this->render('_form', array('data' => $data ));
+        $this->render('_formEmployer', array('data' => $data ));
     }
 
-   /* public function actionWorkman() {
+    public function actionWorkman() {
         // Creating model
         $employer = new Workman();
 //die('21');

@@ -13,14 +13,14 @@
 
 <div class="row">
 <div class="span12"> <?php
-echo $activeform->labelEx($data['company'],'companylegaltype');
-echo $activeform->textField($data['company'],'companylegaltype');
+echo $activeform->labelEx($data['company'],'id_legal_type');
+echo $activeform->textField($data['company'],'id_legal_type');
 ?> </div></div>
 
 <div class="row">
 <div class="span12"> <?php
-echo $activeform->labelEx($data['company'],'companyname');
-echo $activeform->textField($data['company'],'companyname');
+echo $activeform->labelEx($data['company'],'name');
+echo $activeform->textField($data['company'],'name');
 ?> </div></div>
 
 <div class="row"><div class="span12"> <?php

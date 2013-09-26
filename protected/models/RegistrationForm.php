@@ -7,13 +7,6 @@
  */
 class LoginForm extends CFormModel
 {
-    public $companyName;
-    public $companyLegalType;
-
-    public $email;
-    public $password;
-    public $verifyPassword;
-    public $fio;
 
     private $_identity;
 
@@ -25,13 +18,8 @@ class LoginForm extends CFormModel
     public function rules()
     {
         return array(
-            // username and password are required
-            //array('companyName, id_legal_type' , 'required'),
-            array('email, password, verifyPassword ', 'required'),
-            array('email', 'email'),
-            array('password', 'compare', 'compareAttribute'=>'verifyPassword'),
-            array('email', 'filter', 'filter'=>'mb_strtolower'),
-            array('email', 'unique'),
+
+
         );
     }
 
@@ -45,8 +33,6 @@ class LoginForm extends CFormModel
             'password' => 'Password',
             'verifyPassword' => 'Repeat Password',
             'fio' => 'FIO',
-            //'companyName' => 'Company Name',
-            //'companyLegalType' => 'Company Legal Type'
         );
     }
 
