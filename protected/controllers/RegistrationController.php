@@ -42,71 +42,40 @@ class RegistrationController extends Controller {
     }
 
 
-    public function actionEmployer() {
-        // Creating model
-        $data = array();
+    public function actionSignUp() {
+        $data = new RegistrationForm;
 
-        $employer = new Employer();
-        $company = new Company();
-
-        $data['employer'] = $employer;
-        $data['company'] = $company;
-        $data['user'] = 'employer';
-       // echo '<pre>';
-       // var_dump($_POST); die();
-
-        // If dat;a received
-        if((isset($_POST['Employer'])) && (isset($_POST['Company'])))
-        {
-            // Safe attributes values assign
-            $employer->attributes = $_POST['Employer'];
-            $company->attributes = $_POST['Company'];
-
-            // Data validation before saving
-            if(($employer->validate()) && ($company->validate()))
-            {
-                // Save recieved data
-                // false is given for non forward second validation
-                $employer->save(false);
-                $company->save(false);
-
-                // redirect to  all employers list
-                $this->redirect($this->createUrl('employer/'));
-            }
-        }
-
-        // Render registration form
-        $this->render('_formEmployer', array('data' => $data ));
-    }
-
-    public function actionWorkman() {
-        // Creating model
-        $employer = new Workman();
-//die('21');
         // If data received
-        if(isset($_POST['Employer']))
-        {
-            // Safe attributes values assign
-            $employer->attributes = $_POST['Employer'];
+        if(isset($_POST['RegistrationForm'])){
+            $data->attributes = $_POST['RegistrationForm'];
+            //var_dump($_POST); die();
+            if($data->validate()){
+                if($_POST['RegistrationForm']['userSelection'] === 'employer'){
 
-            // Data validation before saving
-            if($employer->validate())
-            {
-                // Save recieved date
-                // false is given for non forward second validation
-                $employer->save(false);
+                    $employer = new Employer();
+                    $employer->attributes = $_POST['RegistrationForm'];
+                    $employer->save(false);
+                    $this->redirect($this->createUrl('employer/'));
+                    return true;
 
-                // redirect to  all employers list
-                $this->redirect($this->createUrl('employer/'));
+                } elseif ($_POST['RegistrationForm']['userSelection'] === 'workman') {
+
+                    $workman = new Workman();
+                    $workman->attributes =  $_POST['RegistrationForm'];
+                    $workman->save(false);
+                    $this->redirect($this->createUrl('workman/'));
+                    return true;
+
+                } else {
+                    return false;
+                }
             }
         }
 
-        // Render registration form
-        $this->render('_form', array('form'=>$employer, 'user'=>'workman'));
 
-
+        //Render registration form
+        $this->render('_form', array('data' => $data));
     }
-   */
 
 
 }

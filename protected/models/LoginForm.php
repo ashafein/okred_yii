@@ -28,6 +28,8 @@ class LoginForm extends CFormModel
 			// password needs to be authenticated
 			array('password', 'authenticate'),
 		);
+
+
 	}
 
 	/**

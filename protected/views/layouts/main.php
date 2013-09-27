@@ -31,8 +31,7 @@
 			'items'=>array(
 				array('label'=>'Search', 'url'=>array('/site/index')),
 				array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
-				array('label'=>'Register Worker', 'url'=>array('/registration/page', 'view'=>'about')),
-				array('label'=>'Register Employer', 'url'=>array('/registration/employer')),
+				array('label'=>'SignUp', 'url'=>array('/registration/signup')),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
             ),
 		)); ?>
