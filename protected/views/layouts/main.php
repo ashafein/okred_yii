@@ -32,7 +32,8 @@
 				array('label'=>'Search', 'url'=>array('/site/index')),
 				array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
 				array('label'=>'SignUp', 'url'=>array('/registration/signup')),
-				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
+                array('label'=>'SignIn', 'url'=>array('/site/signin')),
+                array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
             ),
 		)); ?>
 	</div><!-- mainmenu -->
