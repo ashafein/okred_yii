@@ -27,8 +27,8 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'pssword'); ?>
-		<?php echo $form->textField($model,'pssword',array('size'=>60,'maxlength'=>200)); ?>
+		<?php echo $form->label($model,'password'); ?>
+		<?php echo $form->textField($model,'password',array('size'=>60,'maxlength'=>200)); ?>
 	</div>
 
 	<div class="row">

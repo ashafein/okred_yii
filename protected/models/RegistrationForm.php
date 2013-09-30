@@ -24,7 +24,7 @@ class RegistrationForm extends CFormModel
     {
 		return array(
             // username and password are required
-            array('email, password, verifyPassword', 'required'),
+            array('email, password, verifyPassword, userSelection', 'required'),
             //Email needs to be validated by regular exprassion
             array('email', 'email'),
             //Password needs to be compared with verifyPassword to be sure you're not a bot

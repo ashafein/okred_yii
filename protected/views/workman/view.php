@@ -24,7 +24,7 @@ $this->menu=array(
 		'id_workman',
 		'email',
 		'phone',
-		'pssword',
+		'password',
 		'avatar',
 		'fio',
 		'id_education_lvl',

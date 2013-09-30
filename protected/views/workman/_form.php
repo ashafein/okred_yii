@@ -32,9 +32,9 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'pssword'); ?>
-		<?php echo $form->textField($model,'pssword',array('size'=>60,'maxlength'=>200)); ?>
-		<?php echo $form->error($model,'pssword'); ?>
+		<?php echo $form->labelEx($model,'password'); ?>
+		<?php echo $form->textField($model,'password',array('size'=>60,'maxlength'=>200)); ?>
+		<?php echo $form->error($model,'password'); ?>
 	</div>
 
 	<div class="row">

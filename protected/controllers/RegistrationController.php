@@ -48,7 +48,7 @@ class RegistrationController extends Controller {
         // If data received
         if(isset($_POST['RegistrationForm'])){
             $data->attributes = $_POST['RegistrationForm'];
-            //var_dump($_POST); die();
+             //var_dump($_POST); die();
             if($data->validate()){
                 if($_POST['RegistrationForm']['userSelection'] === 'employer'){
 

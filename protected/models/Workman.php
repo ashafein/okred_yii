@@ -7,7 +7,7 @@
  * @property string $id_workman
  * @property string $email
  * @property string $phone
- * @property string $pssword
+ * @property string $password
  * @property string $avatar
  * @property string $fio
  * @property string $id_education_lvl
@@ -35,7 +35,7 @@ class Workman extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('email, pssword, fio', 'length', 'max'=>200),
+			array('email, password, fio', 'length', 'max'=>200),
 			array('phone', 'length', 'max'=>100),
 			array('avatar', 'length', 'max'=>1024),
 			array('id_education_lvl, id_residence', 'length', 'max'=>10),
@@ -44,7 +44,7 @@ class Workman extends CActiveRecord
 			array('created_at, updated_at', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_workman, email, phone, pssword, avatar, fio, id_education_lvl, gender, birth_date, id_residence, created_at, updated_at', 'safe', 'on'=>'search'),
+			array('id_workman, email, phone, password, avatar, fio, id_education_lvl, gender, birth_date, id_residence, created_at, updated_at', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -68,7 +68,7 @@ class Workman extends CActiveRecord
 			'id_workman' => 'Id Workman',
 			'email' => 'Email',
 			'phone' => 'Phone',
-			'pssword' => 'Pssword',
+			'password' => 'Password',
 			'avatar' => 'Avatar',
 			'fio' => 'Fio',
 			'id_education_lvl' => 'Id Education Lvl',
@@ -101,7 +101,7 @@ class Workman extends CActiveRecord
 		$criteria->compare('id_workman',$this->id_workman,true);
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('phone',$this->phone,true);
-		$criteria->compare('pssword',$this->pssword,true);
+		$criteria->compare('password',$this->password,true);
 		$criteria->compare('avatar',$this->avatar,true);
 		$criteria->compare('fio',$this->fio,true);
 		$criteria->compare('id_education_lvl',$this->id_education_lvl,true);
