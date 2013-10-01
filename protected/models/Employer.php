@@ -23,7 +23,6 @@
  */
 class Employer extends CActiveRecord
 {
-
     public $verifyPassword;
 	/**
 	 * @return string the associated database table name
@@ -48,7 +47,7 @@ class Employer extends CActiveRecord
 			array('created_at, updated_at', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_employer, email, password, fio, id_parent, id_role, id_company, id_city, created_at, updated_at', 'safe', 'on'=>'search'),
+			array('id_employer, email, password, fio, id_parent, id_role, id_company, id_city, created_at, updated_at, username', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -76,6 +75,7 @@ class Employer extends CActiveRecord
 			'fio' => 'FIO',
 			'id_role' => 'Role',
 			'id_city' => 'City',
+            'username' => 'username',
 		);
 	}
 
@@ -107,6 +107,7 @@ class Employer extends CActiveRecord
 		$criteria->compare('id_city',$this->id_city,true);
 		$criteria->compare('created_at',$this->created_at,true);
 		$criteria->compare('updated_at',$this->updated_at,true);
+		$criteria->compare('username',$this->username,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -125,6 +126,11 @@ class Employer extends CActiveRecord
 	}
 
 
+    public function validatePassword($password)
+    {
+        return CPasswordHelper::verifyPassword($password,$this->password);
+    }
+
     /**
      * This is invoked before the record is saved.
      * @return boolean whether the record should be saved.
@@ -140,13 +146,13 @@ class Employer extends CActiveRecord
 
                 $date = date('Y-m-d H:i:s',time());
                 $this->created_at=$date;
-                $this->password = $this->cryptPassword($this->password);
+                $this->password = CPasswordHelper::hashPassword($this->password);
                 return true;
             }
              else {
                  $date = date('Y-m-d H:i:s',time());
                  $this->updated_at=$date;
-                 $this->password = $this->cryptPassword($this->password);
+                 $this->password = CPasswordHelper::hashPassword($this->password);
                  return true;
              }
         }
@@ -155,9 +161,6 @@ class Employer extends CActiveRecord
             return false;
     }
 
-    public function cryptPassword($password)
-    {
-        return crypt($password);
-    }
+
 
 }

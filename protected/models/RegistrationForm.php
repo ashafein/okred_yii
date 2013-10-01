@@ -15,6 +15,7 @@ class RegistrationForm extends CFormModel
     public $verifyPassword;
     public $userSelection;
     public $fio;
+    public $username;
     /**
      * Declares the validation rules.
      * The rules state that username and password are required,
