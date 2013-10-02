@@ -127,33 +127,34 @@ class Workman extends CActiveRecord
 		return parent::model($className);
 	}
 
+
     /**
      * This is invoked before the record is saved.
      * @return boolean whether the record should be saved.
      */protected function beforeSave()
+{
+    if(parent::beforeSave())
     {
-        if(parent::beforeSave())
+        if($this->isNewRecord === true)
         {
-            if($this->isNewRecord === true)
-            {
-                if(!Yii::app()->user->isGuest) {
-                    $this->id_parent = Yii::app()->user->Id;
-                }
+            if(!Yii::app()->user->isGuest) {
+                $this->id_parent = Yii::app()->user->Id;
+            }
 
-                $date = date('Y-m-d H:i:s',time());
-                $this->created_at=$date;
-                $this->password = CPasswordHelper::hashPassword($this->password);
-                return true;
-            }
-            else {
-                $date = date('Y-m-d H:i:s',time());
-                $this->updated_at=$date;
-                $this->password = CPasswordHelper::hashPassword($this->password);
-                return true;
-            }
+            $date = date('Y-m-d H:i:s',time());
+            $this->created_at=$date;
+            $this->password = CPasswordHelper::hashPassword($this->password);
+            return true;
         }
-
-        else
-            return false;
+        else {
+            $date = date('Y-m-d H:i:s',time());
+            $this->updated_at=$date;
+            $this->password = CPasswordHelper::hashPassword($this->password);
+            return true;
+        }
     }
+
+    else
+        return false;
+}
 }

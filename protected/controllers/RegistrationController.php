@@ -54,6 +54,7 @@ class RegistrationController extends Controller {
 
                     $employer = new Employer();
                     $employer->attributes = $_POST['RegistrationForm'];
+                    $employer->
                     $employer->save(false);
                     $this->redirect($this->createUrl('employer/'));
                     return true;

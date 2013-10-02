@@ -144,7 +144,6 @@ class Employer extends CActiveRecord
                    $this->id_parent = Yii::app()->user->Id;
                 }
 
-               // $salt = self::generateSalt();
                 $date = date('Y-m-d H:i:s',time());
                 $this->created_at=$date;
                 $this->password = CPasswordHelper::hashPassword($this->password);
