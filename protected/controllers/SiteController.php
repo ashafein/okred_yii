@@ -75,7 +75,7 @@ class SiteController extends Controller
 	/**
 	 * Displays the login page
 	 */
-	public function actionSignin()
+	public function actionLogin()
 	{
 		$model=new LoginForm;
 
@@ -91,7 +91,9 @@ class SiteController extends Controller
 		{
 			$model->attributes=$_POST['LoginForm'];
 			// validate user input and redirect to the previous page if valid
+            //var_dump($model->login()); die();
 			if($model->validate() && $model->login())
+
 				$this->redirect(Yii::app()->user->returnUrl);
 		}
 		// display the login form

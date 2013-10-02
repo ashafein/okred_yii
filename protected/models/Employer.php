@@ -24,6 +24,8 @@
 class Employer extends CActiveRecord
 {
     public $verifyPassword;
+    public $new_password;
+
 	/**
 	 * @return string the associated database table name
 	 */
@@ -47,7 +49,7 @@ class Employer extends CActiveRecord
 			array('created_at, updated_at', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_employer, email, password, fio, id_parent, id_role, id_company, id_city, created_at, updated_at, username', 'safe', 'on'=>'search'),
+			array('id_employer, email, password, fio, id_parent, id_role, id_company, id_city, created_at, updated_at', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -75,7 +77,6 @@ class Employer extends CActiveRecord
 			'fio' => 'FIO',
 			'id_role' => 'Role',
 			'id_city' => 'City',
-            'username' => 'username',
 		);
 	}
 
@@ -107,7 +108,6 @@ class Employer extends CActiveRecord
 		$criteria->compare('id_city',$this->id_city,true);
 		$criteria->compare('created_at',$this->created_at,true);
 		$criteria->compare('updated_at',$this->updated_at,true);
-		$criteria->compare('username',$this->username,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -144,6 +144,7 @@ class Employer extends CActiveRecord
                    $this->id_parent = Yii::app()->user->Id;
                 }
 
+               // $salt = self::generateSalt();
                 $date = date('Y-m-d H:i:s',time());
                 $this->created_at=$date;
                 $this->password = CPasswordHelper::hashPassword($this->password);

@@ -11,6 +11,7 @@ class m130923_100904_employer extends CDbMigration
                 'fio' => 'VARCHAR(45)',
                 'id_parent' => 'INT UNSIGNED',
                 'id_role' => 'INT UNSIGNED NOT NULL',
+                'id_state' => 'INT UNSIGNED NOT NULL',
                 'id_company' => 'INT UNSIGNED',
                 'id_city' => 'INT UNSIGNED',
                 'created_at'=> 'DATETIME',

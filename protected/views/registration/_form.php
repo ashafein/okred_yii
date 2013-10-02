@@ -20,12 +20,6 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="span12">
-            <?= $activeform->labelEx($data,'username'); ?>
-            <?= $activeform->textField($data,'username'); ?>
-        </div>
-    </div>
 
     <div class="row">
         <div class="span12">

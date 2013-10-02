@@ -15,7 +15,6 @@ class RegistrationForm extends CFormModel
     public $verifyPassword;
     public $userSelection;
     public $fio;
-    public $username;
     /**
      * Declares the validation rules.
      * The rules state that username and password are required,
@@ -26,7 +25,7 @@ class RegistrationForm extends CFormModel
 		return array(
             // username and password are required
             array('email, password, verifyPassword, userSelection', 'required'),
-            //Email needs to be validated by regular exprassion
+            //Email needs to be validated by regular expression
             array('email', 'email'),
             //Password needs to be compared with verifyPassword to be sure you're not a bot
             array('password','compare','compareAttribute'=>'verifyPassword', 'on'=>'signup' ),
@@ -44,6 +43,7 @@ class RegistrationForm extends CFormModel
             'verifyPassword' => 'Repeat Password',
             'fio' => 'FIO',
             'userSelection' => 'Select user type',
+
         );
     }
 
