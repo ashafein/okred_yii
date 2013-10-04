@@ -50,12 +50,16 @@ class Employer extends CActiveRecord
         return array(
             array('email, password', 'required'),
             array('email', 'email'),
+            array('email', 'unique'),
             array('email, password, fio', 'length', 'max'=>255),
             array('password', 'compare', 'compareAttribute'=>'verifyPassword', 'on'=>'create'),
-            array('created_at, updated_at', 'safe'),
+            array('id, created_at, updated_at', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('id, email, password, fio, id_parent, role, id_company, id_city, created_at, updated_at', 'safe', 'on'=>'search'),
+            array('id, id_parent, role, id_company,  created_at, updated_at', 'safe', 'on'=>'update'),
+            array('id, id_parent, role, created_at', 'safe', 'on'=>'create'),
+
         );
     }
 
@@ -151,6 +155,7 @@ class Employer extends CActiveRecord
                     }
 
                     $date = date('Y-m-d H:i:s',time());
+                    $this->state = 0;
                     $this->created_at=$date;
                     $this->password = CPasswordHelper::hashPassword($this->password);
                     $this->role = Employer::ROLE_EMPLOYER;

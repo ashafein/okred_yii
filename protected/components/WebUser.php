@@ -7,7 +7,6 @@ class WebUser extends CWebUser {
         if($user = $this->getModel()){
             // в таблице User есть поле role
             return $user->role;
-
         }
     }
 
@@ -18,5 +17,13 @@ class WebUser extends CWebUser {
             $this->_model = $model::model()->findByPk($this->id, array('select' => 'role'));
         }
         return $this->_model;
+    }
+
+    public function getUserType()
+    {
+        if($user = $this->getModel()){
+            // в таблице User есть поле role
+            return $user->tableName();
+        }
     }
 }

@@ -21,13 +21,19 @@ class UserController extends Controller {
     public function accessRules() {
         return array(
             array('allow',
-                'actions' => array('index', 'error', 'contact', 'login', 'logout'),
+                'actions' => array('error', 'login','signup', 'recover'),
                 'users' => array('*'),
             ),
             array('allow',
                 'actions' => array('captcha'),
                 'users' => array('*'),
             ),
+
+            array('deny',
+                'actions' => array('signup', 'recover', 'login'),
+                'users' => array('@'),
+            ),
+
             array('deny', // deny all other users
                 'users' => array('*'),
             ),
@@ -78,7 +84,7 @@ class UserController extends Controller {
                     $workman->attributes =  $_POST['RegistrationForm'];
                     $workman->role = 'workman';
                     $workman->save(false);
-                    $this->redirect($this->createUrl('workman/'));
+                    $this->redirect(Yii::app()->user->returnUrl);
                     return true;
 
                 } else {
@@ -114,7 +120,7 @@ class UserController extends Controller {
             //var_dump($model->login()); die();
             if($model->validate() && $model->login())
 
-                $this->redirect(Yii::app()->user->returnUrl);
+                $this->redirect($this->createUrl(Yii::app()->user->getUserType().'/view/'.Yii::app()->user->Id));
         }
         // display the login form
         $this->render('login',array('model'=>$model));

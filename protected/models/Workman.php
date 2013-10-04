@@ -142,6 +142,7 @@ class Workman extends CActiveRecord
             if($this->isNewRecord === true)
             {
                 $date = date('Y-m-d H:i:s',time());
+                $this->state = 0;
                 $this->created_at=$date;
                 $this->password = CPasswordHelper::hashPassword($this->password);
                 $this->role = Workman::ROLE_WORKMAN;
