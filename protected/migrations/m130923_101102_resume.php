@@ -26,6 +26,7 @@ class m130923_101102_resume extends CDbMigration
                 'id_employment' => 'INT UNSIGNED NOT NULL',
                 'id_schedule' => 'INT UNSIGNED NOT NULL',
                 'additional_info' => 'varchar(1024)',
+                'state' => 'varchar(20)',
                 'created_at'=> 'DATETIME',
                 'updated_at'=> 'DATETIME',
             ),

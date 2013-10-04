@@ -6,7 +6,8 @@ class m130923_100009_country extends CDbMigration
     {
         $this->createTable('country', array(
                 'id_country' => 'INT UNSIGNED ZEROFILL NOT NULL PRIMARY KEY AUTO_INCREMENT',
-                'country'    => 'varchar(200)',
+                'name_ru'    => 'varchar(200)',
+                'name_en'   => 'varchar(200)',
             ),
             'ENGINE=InnoDB'
         );

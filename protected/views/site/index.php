@@ -1,7 +1,7 @@
 <?php
 /* @var $this SiteController */
 if(!Yii::app()->user->isGuest) {
-    echo 'user is in';
+    echo Yii::app()->user->id;
 } elseif(Yii::app()->user->isGuest) {
     echo 'user is out';
 }

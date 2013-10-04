@@ -19,6 +19,7 @@ class m130923_100958_vacancy extends CDbMigration
                 'functions' => 'varchar(500)',
                 'id_education_lvl' => 'INT UNSIGNED',
                 'schedule' => 'varchar(500)',
+                'state' => 'varchar(20)',
                 'created_at'=> 'DATETIME',
                 'updated_at'=> 'DATETIME',
             ),

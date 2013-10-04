@@ -51,6 +51,10 @@ class CompanyController extends Controller
 	 */
 	public function actionView($id)
 	{
+
+        if (!Yii::app()->user->checkAccess('actionView')) {
+            throw new CHttpException(403, 'Forbidden');
+        }
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
 		));

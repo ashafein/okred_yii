@@ -17,6 +17,7 @@ class UserIdentity extends CUserIdentity
 	 * @return boolean whether authentication succeeds.
 	 */
     public $_id;
+    public $usertype;
 
 	public function authenticate()
 	{
@@ -26,11 +27,14 @@ class UserIdentity extends CUserIdentity
 			'admin'=>'admin',
 		);*/
 
-        $record = Employer::model()->findByAttributes(array('email' => $this->username));
-        if($record===null)
-            // Если нету - сохраняем в errorCode ошибку.
-        $this->errorCode=self::ERROR_USERNAME_INVALID;
-        else if(CPasswordHelper::verifyPassword($this->password,$record->password))
+        if(($record = Employer::model()->findByAttributes(array('email' => $this->username))) === null)
+        {
+               if(($record = Workman::model()->findByAttributes(array('email' => $this->username)))=== null)
+               {
+                   // Если нету - сохраняем в errorCode ошибку.
+                   $this->errorCode=self::ERROR_USERNAME_INVALID;
+               }
+        } else if(CPasswordHelper::verifyPassword($this->password,$record->password))
             // Проверяем совпадает ли введенный пароль с тем что у нас в базе
             // Если не совпадает - сохраняем в errorCode ошибку.
         $this->errorCode=self::ERROR_PASSWORD_INVALID;
@@ -39,7 +43,8 @@ class UserIdentity extends CUserIdentity
             // Если все действий выше успешно пройдены - значит
             // пользователь действительно существует и пароль был
             // указан верно.
-            $this->_id=$record->id_employer;
+            $this->_id=$record->id;
+            $this->setState('usertype', $record->tableName());
             // В errorCode сохраняем что ошибок нет
             $this->errorCode=self::ERROR_NONE;
         }
@@ -49,5 +54,10 @@ class UserIdentity extends CUserIdentity
     public function getId()
     {
         return $this->_id;
+    }
+
+    public function getUserType()
+    {
+        return $this->usertype;
     }
 }

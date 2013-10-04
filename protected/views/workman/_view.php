@@ -5,35 +5,35 @@
 
 <div class="view">
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('id_workman')); ?>:</b>
-	<?php echo CHtml::link(CHtml::encode($data->id_workman), array('view', 'id'=>$data->id_workman)); ?>
-	<br />
+    <b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
+    <?php echo CHtml::link(CHtml::encode($data->id), array('view', 'id'=>$data->id)); ?>
+    <br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('email')); ?>:</b>
-	<?php echo CHtml::encode($data->email); ?>
-	<br />
+    <b><?php echo CHtml::encode($data->getAttributeLabel('email')); ?>:</b>
+    <?php echo CHtml::encode($data->email); ?>
+    <br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('phone')); ?>:</b>
-	<?php echo CHtml::encode($data->phone); ?>
-	<br />
+    <b><?php echo CHtml::encode($data->getAttributeLabel('phone')); ?>:</b>
+    <?php echo CHtml::encode($data->phone); ?>
+    <br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('password')); ?>:</b>
-	<?php echo CHtml::encode($data->password); ?>
-	<br />
+    <b><?php echo CHtml::encode($data->getAttributeLabel('password')); ?>:</b>
+    <?php echo CHtml::encode($data->password); ?>
+    <br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('avatar')); ?>:</b>
-	<?php echo CHtml::encode($data->avatar); ?>
-	<br />
+    <b><?php echo CHtml::encode($data->getAttributeLabel('avatar')); ?>:</b>
+    <?php echo CHtml::encode($data->avatar); ?>
+    <br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('fio')); ?>:</b>
-	<?php echo CHtml::encode($data->fio); ?>
-	<br />
+    <b><?php echo CHtml::encode($data->getAttributeLabel('fio')); ?>:</b>
+    <?php echo CHtml::encode($data->fio); ?>
+    <br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('id_education_lvl')); ?>:</b>
-	<?php echo CHtml::encode($data->id_education_lvl); ?>
-	<br />
+    <b><?php echo CHtml::encode($data->getAttributeLabel('id_education_lvl')); ?>:</b>
+    <?php echo CHtml::encode($data->id_education_lvl); ?>
+    <br />
 
-	<?php /*
+    <?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('gender')); ?>:</b>
 	<?php echo CHtml::encode($data->gender); ?>
 	<br />

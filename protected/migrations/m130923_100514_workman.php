@@ -5,7 +5,7 @@ class m130923_100514_workman extends CDbMigration
     public function up()
     {
         $this->createTable('workman', array(
-                'id_workman' => 'INT UNSIGNED ZEROFILL NOT NULL PRIMARY KEY AUTO_INCREMENT',
+                'id' => 'INT UNSIGNED ZEROFILL NOT NULL PRIMARY KEY AUTO_INCREMENT',
                 'email'    => 'varchar(200)',
                 'phone'    => 'varchar(100)',
                 'password'    => 'varchar(200)',
@@ -17,6 +17,8 @@ class m130923_100514_workman extends CDbMigration
                 'gender'    => 'ENUM("male", "female", "none")',
                 'birth_date'    => 'varchar(20)',
                 'id_residence'    => 'INT UNSIGNED',
+                'state' => 'varchar(20)',
+                'last_visited_at' => 'DATETIME',
                 'created_at'=> 'DATETIME',
                 'updated_at'=> 'DATETIME',
             ),

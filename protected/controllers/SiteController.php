@@ -21,6 +21,32 @@ class SiteController extends Controller
 		);
 	}
 
+
+
+
+    public function accessRules() {
+        return array(
+            array('allow',
+                'actions' => array('index', 'error', 'contact', 'logout'),
+                'users' => array('*'),
+            ),
+
+            array('allow',
+                'actions' => array('install'),
+                'roles' => array('admin'),
+            ),
+
+            array('allow',
+                'actions' => array('captcha'),
+                'users' => array('*'),
+            ),
+            array('deny', // deny all other users
+                'users' => array('*'),
+            ),
+
+        );
+    }
+
 	/**
 	 * This is the default 'index' action that is invoked
 	 * when an action is not explicitly requested by users.
@@ -31,6 +57,93 @@ class SiteController extends Controller
 		// using the default layout 'protected/views/layouts/main.php'
 		$this->render('index');
 	}
+
+    public function actionInstall()
+    {
+        $auth=Yii::app()->authManager;
+
+        $auth->clearAll();
+
+        $auth->createOperation('createCompany','create a company');
+        $auth->createOperation('viewCompany','view a company');
+        $auth->createOperation('updateCompany','update a company');
+        $auth->createOperation('deleteCompany','delete a company');
+
+        $auth->createOperation('deleteResume','delete a resume');
+        $auth->createOperation('createResume','delete a resume');
+        $auth->createOperation('viewResume','delete a resume');
+        $auth->createOperation('updateResume','delete a resume');
+
+        $auth->createOperation('createEmployer','delete a resume');
+        $auth->createOperation('viewEmployer','delete a resume');
+        $auth->createOperation('updateEmployer','delete a resume');
+        $auth->createOperation('indexEmployer','delete a resume');
+        $auth->createOperation('deleteEmployer','delete a resume');
+
+
+        $auth->createOperation('indexWorkman','delete a resume');
+        $auth->createOperation('createWorkman','delete a resume');
+        $auth->createOperation('deleteWorkman','delete a resume');
+        $auth->createOperation('updateWorkman','delete a resume');
+        $auth->createOperation('viewWorkman','delete a resume');
+
+        $auth->createOperation('changeRole','delete a resume');
+
+        $bizRule='return Yii::app()->user->id==$params["company"]->id_employer;';
+        $task=$auth->createTask('updateOwnCompany','update a post by author himself',$bizRule);
+        $task->addChild('updateCompany');
+
+
+        $bizRule='return Yii::app()->user->id==$params["employer"]->id;';
+        $task=$auth->createTask('updateOwnEmployer','update a post by author himself',$bizRule);
+        $task->addChild('updateEmployer');
+
+
+        $bizRule='return Yii::app()->user->id==$params["workman"]->id;';
+        $task=$auth->createTask('updateOwnWorkman','update a post by author himself',$bizRule);
+        $task->addChild('updateWorkman');
+
+
+        $role=$auth->createRole('child_employer');
+        $role->addChild('viewCompany');
+
+        $role=$auth->createRole('employer');
+        $role->addChild('child_employer');
+        $role->addChild('createCompany');
+        $role->addChild('updateCompany');
+
+        $role=$auth->createRole('workman');
+        $role->addChild('createResume');
+        $role->addChild('updateResume');
+        $role->addChild('viewResume');
+        $role->addChild('updateWorkman');
+
+        $role=$auth->createRole('admin');
+        $role->addChild('employer');
+        $role->addChild('workman');
+        $role->addChild('deleteCompany');
+        $role->addChild('deleteResume');
+        $role->addChild('indexWorkman');
+        $role->addChild('indexEmployer');
+
+        //создаем пользователя root (запись в БД в таблице users)
+        //тут используем DAO, т.к. AR автоматически назначит пользователю роль user
+        $password = CPasswordHelper::hashPassword('123456');
+
+        $sql = 'INSERT INTO employer(fio, email, password, state, role)'
+
+            .' VALUES ("root", "test@test.ru", "'.$password
+            .'", '.Employer::STATE_ACTIVE.', "'.Employer::ROLE_ADMIN.'")';
+        $conn = Yii::app()->db;
+        $conn->createCommand($sql)->execute();
+
+        //связываем пользователя с ролью
+        $auth->assign('admin', $conn->getLastInsertID());
+
+        $auth->save();
+
+       // $this->render('install');
+    }
 
 	/**
 	 * This is the action to handle external exceptions.
@@ -72,40 +185,9 @@ class SiteController extends Controller
 		$this->render('contact',array('model'=>$model));
 	}
 
-	/**
-	 * Displays the login page
-	 */
-	public function actionLogin()
-	{
-		$model=new LoginForm;
-
-		// if it is ajax validation request
-		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
-		{
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
-		}
-
-		// collect user input data
-		if(isset($_POST['LoginForm']))
-		{
-			$model->attributes=$_POST['LoginForm'];
-			// validate user input and redirect to the previous page if valid
-            //var_dump($model->login()); die();
-			if($model->validate() && $model->login())
-
-				$this->redirect(Yii::app()->user->returnUrl);
-		}
-		// display the login form
-		$this->render('login',array('model'=>$model));
-	}
-
-	/**
-	 * Logs out the current user and redirect to homepage.
-	 */
-	public function actionLogout()
-	{
-		Yii::app()->user->logout();
-		$this->redirect(Yii::app()->homeUrl);
-	}
+    public function actionLogout()
+    {
+        Yii::app()->user->logout();
+        $this->redirect(Yii::app()->homeUrl);
+    }
 }
