@@ -5,8 +5,9 @@
  *
  * The followings are the available columns in table 'employer':
  * @property string $id
- * @property string $email
  * @property string $password
+ * @property string $email
+ * @property string $phone
  * @property string $fio
  * @property string $id_parent
  * @property string $role
@@ -23,8 +24,7 @@
  */
 class Employer extends CActiveRecord
 {
-    public $verifyPassword;
-    public $new_password;
+
 
     const ROLE_ADMIN = 'admin';
     const ROLE_EMPLOYER = 'employer';
@@ -32,6 +32,12 @@ class Employer extends CActiveRecord
 
     const STATE_ACTIVE = 1;
     const STATE_DISABLED = 2;
+
+    public $verifyPassword;
+    public $new_password;
+    public $name;
+    public $surname;
+    public $patronymic;
     /**
      * @return string the associated database table name
      */
@@ -50,14 +56,14 @@ class Employer extends CActiveRecord
         return array(
             array('email, password', 'required'),
             array('email', 'email'),
-            array('email', 'unique'),
+            array('email', 'unique','className' => 'Employer'),
             array('email, password, fio', 'length', 'max'=>255),
             array('password', 'compare', 'compareAttribute'=>'verifyPassword', 'on'=>'create'),
             array('id, created_at, updated_at', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('id, email, password, fio, id_parent, role, id_company, id_city, created_at, updated_at', 'safe', 'on'=>'search'),
-            array('id, id_parent, role, id_company,  created_at, updated_at', 'safe', 'on'=>'update'),
+            array('id, id_parent, role, id_company,  created_at, updated_at, phone', 'safe', 'on'=>'update'),
             array('id, id_parent, role, created_at', 'safe', 'on'=>'create'),
 
         );
@@ -87,8 +93,16 @@ class Employer extends CActiveRecord
             'fio' => 'FIO',
             'role' => 'Role',
             'id_city' => 'City',
+            'name' => 'Name',
+            'surname' => 'Surname',
+            'patronymic' => 'Patronymic',
+            'phone' => 'Phone Number',
         );
     }
+
+
+
+
 
     /**
      * Retrieves a list of models based on the current search/filter conditions.
@@ -118,10 +132,27 @@ class Employer extends CActiveRecord
         $criteria->compare('id_city',$this->id_city,true);
         $criteria->compare('created_at',$this->created_at,true);
         $criteria->compare('updated_at',$this->updated_at,true);
+        $criteria->compare('phone',$this->phone,true);
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
         ));
+    }
+
+    public function getFio($name, $surname, $patronymic)
+    {
+        if(isset($name) && isset($surname) && isset ($patronymic))
+        {
+            return $this->fio = $name.'|'.$surname.'|'.$patronymic;
+        }
+        return null;
+    }
+
+    public function explodeFio($fio) {
+
+        $result = explode('|', $fio);
+
+        return $result;
     }
 
     /**

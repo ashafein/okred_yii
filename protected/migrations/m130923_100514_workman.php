@@ -12,7 +12,7 @@ class m130923_100514_workman extends CDbMigration
                 'avatar'    => 'varchar(1024)',
                 'fio'    => 'varchar(200)',
                 'id_state' => 'INT UNSIGNED NOT NULL',
-                'id_role' => 'INT UNSIGNED NOT NULL',
+                'role' => 'INT UNSIGNED NOT NULL',
                 'id_education_lvl'    => 'INT UNSIGNED',
                 'gender'    => 'ENUM("male", "female", "none")',
                 'birth_date'    => 'varchar(20)',
@@ -21,6 +21,8 @@ class m130923_100514_workman extends CDbMigration
                 'last_visited_at' => 'DATETIME',
                 'created_at'=> 'DATETIME',
                 'updated_at'=> 'DATETIME',
+                'CONSTRAINT email UNIQUE (email)',
+                'CONSTRAINT phone UNIQUE (phone)',
             ),
             'ENGINE=InnoDB'
         );

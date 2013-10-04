@@ -27,14 +27,14 @@ class SiteController extends Controller
     public function accessRules() {
         return array(
             array('allow',
-                'actions' => array('index', 'error', 'logout'),
+                'actions' => array('index', 'error', 'logout', 'install'),
                 'users' => array('*'),
             ),
 
-            array('allow',
+           /* array('allow',
                 'actions' => array('install'),
                 'roles' => array('admin'),
-            ),
+            ), */
 
             array('allow',
                 'actions' => array('captcha'),
@@ -143,7 +143,7 @@ class SiteController extends Controller
         $conn->createCommand($sql)->execute();
 
         //связываем пользователя с ролью
-        $auth->assign('admin', $conn->getLastInsertID());
+        $auth->assignwithtype('admin', $conn->getLastInsertID(), 'admin');
 
         $auth->save();
 

@@ -38,6 +38,8 @@ class Workman extends CActiveRecord
         // will receive user inputs.
         return array(
             array('email, password, fio', 'length', 'max'=>200),
+            array('email', 'unique','className' => 'Employer'),
+            array('email', 'email'),
             array('phone', 'length', 'max'=>100),
             array('avatar', 'length', 'max'=>1024),
             array('id_education_lvl, id_residence', 'length', 'max'=>10),
@@ -119,6 +121,16 @@ class Workman extends CActiveRecord
         ));
     }
 
+
+    public function getFio($name, $surname, $lastname)
+    {
+        if(isset($name) && isset($surname) && isset ($lastname))
+        {
+            return $this->fio = $name.'|'.$surname.'|'.$lastname;
+        }
+        return null;
+    }
+
     /**
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!
@@ -159,6 +171,8 @@ class Workman extends CActiveRecord
         else
             return false;
     }
+
+
 
     public function afterSave() {
         parent::afterSave();

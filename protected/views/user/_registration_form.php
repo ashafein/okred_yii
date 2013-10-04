@@ -11,12 +11,24 @@
     ?>
     <?php echo CHtml::errorSummary(array($data)); ?>
 
-
+    <div class="row">
+        <div class="span12">
+            <?= $activeform->labelEx($data,'surname'); ?>
+            <?= $activeform->textField($data,'surname'); ?>
+        </div>
+    </div>
 
     <div class="row">
         <div class="span12">
-            <?= $activeform->labelEx($data,'fio'); ?>
-            <?= $activeform->textField($data,'fio'); ?>
+            <?= $activeform->labelEx($data,'name'); ?>
+            <?= $activeform->textField($data,'name'); ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="span12">
+            <?= $activeform->labelEx($data,'patronymic'); ?>
+            <?= $activeform->textField($data,'patronymic'); ?>
         </div>
     </div>
 
@@ -25,6 +37,13 @@
         <div class="span12">
              <?= $activeform->labelEx($data,'email'); ?>
              <?= $activeform->textField($data,'email');?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="span12">
+             <?= $activeform->labelEx($data,'phone'); ?>
+             <?= $activeform->textField($data,'phone');?>
         </div>
     </div>
 

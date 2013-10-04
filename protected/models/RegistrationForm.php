@@ -12,9 +12,14 @@ class RegistrationForm extends CFormModel
 
     public $email;
     public $password;
+    public $phone;
     public $verifyPassword;
     public $userSelection;
     public $fio;
+    public $name;
+    public $surname;
+    public $patronymic;
+
     /**
      * Declares the validation rules.
      * The rules state that username and password are required,
@@ -43,7 +48,10 @@ class RegistrationForm extends CFormModel
             'verifyPassword' => 'Repeat Password',
             'fio' => 'FIO',
             'userSelection' => 'Select user type',
-
+            'name' => 'Name',
+            'surname' => 'Surname',
+            'patronymic' => 'Patronymic',
+            'phone' => 'Phone Number',
         );
     }
 

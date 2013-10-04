@@ -67,26 +67,33 @@ class UserController extends Controller {
         // If data received
         if(isset($_POST['RegistrationForm'])){
             $data->attributes = $_POST['RegistrationForm'];
-            //var_dump($_POST); die();
+           // var_dump( $_POST['RegistrationForm']); die();
             if($data->validate()){
                 if($_POST['RegistrationForm']['userSelection'] === 'employer'){
 
                     $employer = new Employer();
                     $employer->attributes = $_POST['RegistrationForm'];
-                    $employer->role = 'employer';
-                    $employer->save(false);
-                    $this->redirect($this->createUrl('employer/'));
-                    return true;
-
+                    if($employer->validate()){
+                        $employer->fio = $employer->getFio($_POST['RegistrationForm']['name'], $_POST['RegistrationForm']['surname'], $_POST['RegistrationForm']['patronymic']);
+                        $employer->role = 'employer';
+                        $employer->phone = $_POST['RegistrationForm']['phone'];
+                        //var_dump($employer); die();
+                        $employer->save(false);
+                        $this->redirect($this->createUrl('employer/'));
+                        return true;
+                    }
                 } elseif ($_POST['RegistrationForm']['userSelection'] === 'workman') {
 
                     $workman = new Workman();
                     $workman->attributes =  $_POST['RegistrationForm'];
-                    $workman->role = 'workman';
-                    $workman->save(false);
-                    $this->redirect(Yii::app()->user->returnUrl);
-                    return true;
-
+                    if($employer->validate()){
+                        $workman->fio = $workman->getFio($_POST['RegistrationForm']['name'], $_POST['RegistrationForm']['surname'], $_POST['RegistrationForm']['patronymic']);
+                        $workman->role = 'workman';
+                        $workman->phone = $_POST['RegistrationForm']['phone'];
+                        $workman->save(false);
+                        $this->redirect($this->createUrl('workman/'));
+                        return true;
+                    }
                 } else {
                     return false;
                 }
