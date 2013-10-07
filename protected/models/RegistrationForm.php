@@ -32,6 +32,8 @@ class RegistrationForm extends CFormModel
             array('email, password, verifyPassword, userSelection', 'required'),
             //Email needs to be validated by regular expression
             array('email', 'email'),
+            array('email', 'unique','className' => 'Employer'),
+            array('email', 'unique','className' => 'Workman'),
             //Password needs to be compared with verifyPassword to be sure you're not a bot
             array('password','compare','compareAttribute'=>'verifyPassword', 'on'=>'signup' ),
         );

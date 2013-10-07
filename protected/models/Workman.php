@@ -40,6 +40,7 @@ class Workman extends CActiveRecord
             array('email, password, fio', 'length', 'max'=>200),
             array('email', 'unique','className' => 'Employer'),
             array('email', 'email'),
+            array('email', 'unique','className' => 'Employer'),
             array('phone', 'length', 'max'=>100),
             array('avatar', 'length', 'max'=>1024),
             array('id_education_lvl, id_residence', 'length', 'max'=>10),

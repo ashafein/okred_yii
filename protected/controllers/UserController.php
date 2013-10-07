@@ -73,27 +73,24 @@ class UserController extends Controller {
 
                     $employer = new Employer();
                     $employer->attributes = $_POST['RegistrationForm'];
-                    if($employer->validate()){
+
                         $employer->fio = $employer->getFio($_POST['RegistrationForm']['name'], $_POST['RegistrationForm']['surname'], $_POST['RegistrationForm']['patronymic']);
                         $employer->role = 'employer';
                         $employer->phone = $_POST['RegistrationForm']['phone'];
                         //var_dump($employer); die();
                         $employer->save(false);
-                        $this->redirect($this->createUrl('employer/'));
+                        $this->redirect($this->createUrl('company/create/'));
                         return true;
-                    }
                 } elseif ($_POST['RegistrationForm']['userSelection'] === 'workman') {
 
                     $workman = new Workman();
                     $workman->attributes =  $_POST['RegistrationForm'];
-                    if($employer->validate()){
                         $workman->fio = $workman->getFio($_POST['RegistrationForm']['name'], $_POST['RegistrationForm']['surname'], $_POST['RegistrationForm']['patronymic']);
                         $workman->role = 'workman';
                         $workman->phone = $_POST['RegistrationForm']['phone'];
                         $workman->save(false);
-                        $this->redirect($this->createUrl('workman/'));
+                        $this->redirect($this->createUrl('resume/create'));
                         return true;
-                    }
                 } else {
                     return false;
                 }
