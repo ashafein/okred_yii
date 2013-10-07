@@ -10,19 +10,31 @@ class UserController extends Controller {
 
     public function beforeAction($action) {
 
-        if(!Yii::app()->user->isGuest)
-            $this->redirect(Yii::app()->user->returnUrl);
 
 
         return parent::beforeAction($action);
     }
 
+    /**
+     * @return array action filters
+     */
+   /* public function filters()
+    {
+        return array(
+            'accessControl', // perform access control for CRUD operations
+            'postOnly + delete', // we only allow deletion via POST request
+        );
+    }*/
 // Actions access rights for users
     public function accessRules() {
         return array(
             array('allow',
                 'actions' => array('error', 'login','signup', 'recover'),
                 'users' => array('*'),
+            ),
+            array('allow',
+                'actions' => array('view', 'index'),
+                'users' => array('@'),
             ),
             array('allow',
                 'actions' => array('captcha'),
@@ -112,10 +124,23 @@ class UserController extends Controller {
         {
             $model->attributes=$_POST['LoginForm'];
             if($model->validate() && $model->login())
-                $this->redirect(Yii::app()->user->returnUrl);
+               //var_dump('1'); die('2');
+
+                $this->redirect($this->createUrl(Yii::app()->user->getRole().'/view/'.Yii::app()->user->Id));
         }
         // display the login form
         $this->render('login',array('model'=>$model));
+    }
+
+    /**
+     * Displays a particular model.
+     * @param integer $id the ID of the model to be displayed
+     */
+    public function actionView($id)
+    {
+        $this->render('view',array(
+            'model'=>$this->loadModel($id),
+        ));
     }
 
 
@@ -124,4 +149,20 @@ class UserController extends Controller {
 
     }
 
+    public function actionIndex()
+    {
+        $dataProvider=new CActiveDataProvider('User');
+        $this->render('index',array(
+            'dataProvider'=>$dataProvider,
+        ));
+    }
+
+
+    public function loadModel($id)
+    {
+        $model=User::model()->findByPk($id);
+        if($model===null)
+            throw new CHttpException(404,'The requested page does not exist.');
+        return $model;
+    }
 }

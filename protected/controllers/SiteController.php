@@ -85,6 +85,11 @@ class SiteController extends Controller
         $auth->createOperation('indexEmployer','delete a resume');
         $auth->createOperation('deleteEmployer','delete a resume');
 
+        $auth->createOperation('viewUser','delete a resume');
+        $auth->createOperation('indexUser','delete a resume');
+        $auth->createOperation('updateUser','delete a resume');
+        $auth->createOperation('deleteUser','delete a resume');
+        $auth->createOperation('createUser','delete a resume');
 
         $auth->createOperation('indexWorkman','delete a resume');
         $auth->createOperation('createWorkman','delete a resume');
@@ -116,6 +121,16 @@ class SiteController extends Controller
         $role->addChild('child_employer');
         $role->addChild('createCompany');
         $role->addChild('updateCompany');
+        $auth->createOperation('viewUser','delete a resume');
+        $auth->createOperation('indexUser','delete a resume');
+        $auth->createOperation('updateUser','delete a resume');
+        $auth->createOperation('deleteUser','delete a resume');
+        $auth->createOperation('createUser','delete a resume');
+        $auth->createOperation('createEmployer','delete a resume');
+        $auth->createOperation('viewEmployer','delete a resume');
+        $auth->createOperation('updateEmployer','delete a resume');
+        $auth->createOperation('indexEmployer','delete a resume');
+        $auth->createOperation('deleteEmployer','delete a resume');
 
         $role=$auth->createRole('workman');
         $role->addChild('createResume');
