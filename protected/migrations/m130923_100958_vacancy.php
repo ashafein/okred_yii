@@ -12,7 +12,7 @@ class m130923_100958_vacancy extends CDbMigration
                 'salary_from' => 'INT UNSIGNED',
                 'salary_to' => 'INT UNSIGNED',
                 'id_currency' => 'INT UNSIGNED',
-                'id_expirience' => 'INT UNSIGNED',
+                'id_experience' => 'INT UNSIGNED',
                 'description' => 'varchar(1024)',
                 'address' => 'varchar(500)',
                 'id_activity_sphere' => 'INT UNSIGNED',

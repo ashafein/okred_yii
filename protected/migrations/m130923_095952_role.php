@@ -32,7 +32,6 @@ class m130923_095952_role extends CDbMigration
         (
            `itemname`             varchar(64) not null,
            `userid`               varchar(64) not null,
-           `usertype`               varchar(64) not null,
            `bizrule`              text,
            `data`                 text,
            primary key (`itemname`,`userid`),
