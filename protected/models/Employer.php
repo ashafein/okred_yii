@@ -1,50 +1,31 @@
 <?php
 
 /**
- * This is the model class for table "employer".
+ * This is the model class for table "user".
  *
- * The followings are the available columns in table 'employer':
+ * The followings are the available columns in table 'user':
  * @property string $id
- * @property string $password
  * @property string $email
  * @property string $phone
- * @property string $fio
- * @property string $id_parent
+ * @property string $password
+ * @property string $avatar
+ * @property string $name
+ * @property string $surname
+ * @property string $patronymic
  * @property string $role
- * @property string $id_company
+ * @property string $gender
+ * @property string $birth_date
+ * @property string $id_country
  * @property string $id_city
+ * @property string $state
+ * @property string $last_visited_at
  * @property string $created_at
  * @property string $updated_at
- *
- * The followings are the available model relations:
- * @property Role $idRole
- * @property Company $idCompany
- * @property City $idCity
- * @property Vacancy[] $vacancies
- */
-class Employer extends CActiveRecord
+
+*/
+class Employer extends User
 {
 
-
-    const ROLE_ADMIN = 'admin';
-    const ROLE_EMPLOYER = 'employer';
-    const CHILD_EMPLOYER = 'child_employer';
-
-    const STATE_ACTIVE = 1;
-    const STATE_DISABLED = 2;
-
-    public $verifyPassword;
-    public $new_password;
-    public $name;
-    public $surname;
-    public $patronymic;
-    /**
-     * @return string the associated database table name
-     */
-    public function tableName()
-    {
-        return 'employer';
-    }
 
     /**
      * @return array validation rules for model attributes.
@@ -54,33 +35,25 @@ class Employer extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('email, password', 'required'),
+            array('email, phone', 'unique','className' => 'User'),
             array('email', 'email'),
-            array('email', 'unique','className' => 'Employer'),
-            array('email, password, fio', 'length', 'max'=>255),
-            array('password', 'compare', 'compareAttribute'=>'verifyPassword', 'on'=>'create'),
-            array('id, created_at, updated_at', 'safe'),
+            array('userSelection', 'required', 'on'=>'insert'),
+            array('email, password, verifyPassword', 'required'),
+            array('password','compare','compareAttribute'=>'verifyPassword' ),
+            array('phone', 'length', 'max'=>100),
+            array('email, password, name, surname, patronymic', 'length', 'max'=>200),
+            array('phone', 'length', 'max'=>100),
+            //array('avatar', 'length', 'max'=>1024),
+            array('role, id_country, id_city', 'length', 'max'=>10),
+            array('gender', 'length', 'max'=>6),
+            array('birth_date, state', 'length', 'max'=>20),
+            array('last_visited_at, created_at, updated_at', 'unsafe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, email, password, fio, id_parent, role, id_company, id_city, created_at, updated_at', 'safe', 'on'=>'search'),
-            array('id, id_parent, role, id_company,  created_at, updated_at, phone', 'safe', 'on'=>'update'),
-            array('id, id_parent, role, created_at', 'safe', 'on'=>'create'),
-
+            array('id, email, phone, password, avatar, name, surname, patronymic, role, gender, birth_date, id_country, id_city, state, last_visited_at, created_at, updated_at', 'safe', 'on'=>'search'),
         );
     }
 
-    /**
-     * @return array relational rules.
-     */
-    public function relations()
-    {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
-        return array(
-            'company' => array(self::HAS_ONE, 'Company', 'id'),
-            'vacancies' => array(self::HAS_MANY, 'Vacancy', 'id'),
-        );
-    }
 
     /**
      * @return array customized attribute labels (name=>label)
@@ -89,20 +62,23 @@ class Employer extends CActiveRecord
     {
         return array(
             'email' => 'Email',
+            'phone' => 'Phone Number',
             'password' => 'Password',
-            'fio' => 'FIO',
-            'role' => 'Role',
-            'id_city' => 'City',
+            'avatar' => 'Avatar',
             'name' => 'Name',
             'surname' => 'Surname',
             'patronymic' => 'Patronymic',
-            'phone' => 'Phone Number',
+            'role' => 'Role',
+            'gender' => 'Gender',
+            'birth_date' => 'Birth Date',
+            'id_country' => 'Country',
+            'id_city' => 'City',
+            'state' => 'State',
+            'last_visited_at' => 'Last Visited At',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
         );
     }
-
-
-
-
 
     /**
      * Retrieves a list of models based on the current search/filter conditions.
@@ -124,36 +100,39 @@ class Employer extends CActiveRecord
 
         $criteria->compare('id',$this->id,true);
         $criteria->compare('email',$this->email,true);
-        $criteria->compare('password',$this->password,true);
-        $criteria->compare('fio',$this->fio,true);
-        $criteria->compare('id_parent',$this->id_parent,true);
+        $criteria->compare('phone',$this->phone,true);
+        $criteria->compare('avatar',$this->avatar,true);
+        $criteria->compare('name',$this->name,true);
+        $criteria->compare('surname',$this->surname,true);
+        $criteria->compare('patronymic',$this->patronymic,true);
         $criteria->compare('role',$this->role,true);
-        $criteria->compare('id_company',$this->id_company,true);
+        $criteria->compare('gender',$this->gender,true);
+        $criteria->compare('birth_date',$this->birth_date,true);
+        $criteria->compare('id_country',$this->id_country,true);
         $criteria->compare('id_city',$this->id_city,true);
+        $criteria->compare('state',$this->state,true);
+        $criteria->compare('last_visited_at',$this->last_visited_at,true);
         $criteria->compare('created_at',$this->created_at,true);
         $criteria->compare('updated_at',$this->updated_at,true);
-        $criteria->compare('phone',$this->phone,true);
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
         ));
     }
-
-    public function getFio($name, $surname, $patronymic)
+    /**
+     * @return array relational rules.
+     */
+    public function relations()
     {
-        if(isset($name) && isset($surname) && isset ($patronymic))
-        {
-            return $this->fio = $name.'|'.$surname.'|'.$patronymic;
-        }
-        return null;
+        // NOTE: you may need to adjust the relation name and the related
+        // class name for the relations automatically generated below.
+        return array(
+            'company' => array(self::HAS_MANY, 'Company', 'id_employer'),
+            'vacancies' => array(self::HAS_MANY, 'Vacancy', 'id_employer'),
+        );
     }
 
-    public function explodeFio($fio) {
 
-        $result = explode('|', $fio);
-
-        return $result;
-    }
 
     /**
      * Returns the static model of the specified AR class.
@@ -189,7 +168,7 @@ class Employer extends CActiveRecord
                     $this->state = 0;
                     $this->created_at=$date;
                     $this->password = CPasswordHelper::hashPassword($this->password);
-                    $this->role = Employer::ROLE_EMPLOYER;
+                    $this->role = User::ROLE_EMPLOYER;
                     return true;
                 }
                 else {
@@ -204,7 +183,7 @@ class Employer extends CActiveRecord
                 return false;
         }
 
-    public function afterSave() {
+   /* public function afterSave() {
         parent::afterSave();
         //связываем нового пользователя с ролью
         $auth=Yii::app()->authManager;
@@ -212,14 +191,13 @@ class Employer extends CActiveRecord
         if(!$this->isNewRecord === true){
             $auth->revoke($this->prevRole, $this->id);
         }
-        $auth->assignwithtype($this->role, $this->id, $this->tableName());
+        $auth->assign($this->role, $this->id);
         $auth->save();
         return true;
     }
-
+*/
     public function beforeDelete() {
         parent::beforeDelete();
-        //убираем связь удаленного пользователя с ролью
         $auth=Yii::app()->authManager;
         $auth->revoke($this->role, $this->id);
         $auth->save();

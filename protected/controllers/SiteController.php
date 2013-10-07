@@ -135,10 +135,10 @@ class SiteController extends Controller
         //тут используем DAO, т.к. AR автоматически назначит пользователю роль user
         $password = CPasswordHelper::hashPassword('123456');
 
-        $sql = 'INSERT INTO employer(fio, email, password, state, role)'
+        $sql = 'INSERT INTO user(email, password, state, role)'
 
-            .' VALUES ("root", "test@test.ru", "'.$password
-            .'", '.Employer::STATE_ACTIVE.', "'.Employer::ROLE_ADMIN.'")';
+            .' VALUES ("test@test.ru", "'.$password
+            .'", '.User::STATE_ACTIVE.', "'.User::ROLE_ADMIN.'")';
         $conn = Yii::app()->db;
         $conn->createCommand($sql)->execute();
 

@@ -2,7 +2,7 @@
 
 
 class UserController extends Controller {
-    public $defaultAction = 'registration';
+    public $defaultAction = 'login';
 
     // Only allow the registration if the user is not already logged in and
     // the function is activated in the Module Configuration
@@ -62,44 +62,35 @@ class UserController extends Controller {
     }
 
     public function actionSignUp() {
-        $data = new RegistrationForm;
 
+        $user = new User;
+        $path = '';
+      //  var_dump($user->getScenario()); die('21');
         // If data received
-        if(isset($_POST['RegistrationForm'])){
-            $data->attributes = $_POST['RegistrationForm'];
-           // var_dump( $_POST['RegistrationForm']); die();
-            if($data->validate()){
-                if($_POST['RegistrationForm']['userSelection'] === 'employer'){
+        if(isset($_POST['User'])){
+            $user->attributes = $_POST['User'];
+            if($user->validate()){
+                if($_POST['User']['userSelection'] == 'employer'){
+                    $data = new Employer;
+                    $data->attributes = $_POST['User'];
+                    $path = 'company';
+                    $data->save(false);
 
-                    $employer = new Employer();
-                    $employer->attributes = $_POST['RegistrationForm'];
-
-                        $employer->fio = $employer->getFio($_POST['RegistrationForm']['name'], $_POST['RegistrationForm']['surname'], $_POST['RegistrationForm']['patronymic']);
-                        $employer->role = 'employer';
-                        $employer->phone = $_POST['RegistrationForm']['phone'];
-                        //var_dump($employer); die();
-                        $employer->save(false);
-                        $this->redirect($this->createUrl('company/create/'));
-                        return true;
-                } elseif ($_POST['RegistrationForm']['userSelection'] === 'workman') {
-
-                    $workman = new Workman();
-                    $workman->attributes =  $_POST['RegistrationForm'];
-                        $workman->fio = $workman->getFio($_POST['RegistrationForm']['name'], $_POST['RegistrationForm']['surname'], $_POST['RegistrationForm']['patronymic']);
-                        $workman->role = 'workman';
-                        $workman->phone = $_POST['RegistrationForm']['phone'];
-                        $workman->save(false);
-                        $this->redirect($this->createUrl('resume/create'));
-                        return true;
-                } else {
+                }else if($_POST['User']['userSelection'] == 'workman'){
+                    $data = new Workman;
+                    $data->attributes = $_POST['User'];
+                    $path = 'vacancy';
+                    $data->save(false);
+                }else{
                     return false;
                 }
+                $this->redirect($this->createUrl('/site/index'));
+                return true;
             }
         }
 
-
         //Render registration form
-        $this->render('_registration_form', array('data' => $data));
+        $this->render('_registration_form', array('data' => $user));
     }
 
     /**
@@ -120,22 +111,17 @@ class UserController extends Controller {
         if(isset($_POST['LoginForm']))
         {
             $model->attributes=$_POST['LoginForm'];
-            // validate user input and redirect to the previous page if valid
-            //var_dump($model->login()); die();
             if($model->validate() && $model->login())
-
-                $this->redirect($this->createUrl(Yii::app()->user->getUserType().'/view/'.Yii::app()->user->Id));
+                $this->redirect(Yii::app()->user->returnUrl);
         }
         // display the login form
         $this->render('login',array('model'=>$model));
     }
 
 
-
     public function actionRecover()
     {
 
     }
-
 
 }

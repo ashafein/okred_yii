@@ -5,25 +5,15 @@ class WebUser extends CWebUser {
 
     function getRole() {
         if($user = $this->getModel()){
-            // в таблице User есть поле role
             return $user->role;
         }
     }
 
     private function getModel(){
         if (!$this->isGuest && $this->_model === null){
-            $model = ucfirst($this->getState('usertype'));
-
-            $this->_model = $model::model()->findByPk($this->id, array('select' => 'role'));
+            $this->_model = User::model()->findByPk($this->id, array('select' => 'role'));
         }
         return $this->_model;
     }
 
-    public function getUserType()
-    {
-        if($user = $this->getModel()){
-            // в таблице User есть поле role
-            return $user->tableName();
-        }
-    }
 }

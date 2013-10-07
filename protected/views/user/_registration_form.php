@@ -7,7 +7,6 @@
                 'id'=>'registration-form',
                 'enableAjaxValidation'=>false,
                 ));
-    //var_dump($data); die();
     ?>
     <?php echo CHtml::errorSummary(array($data)); ?>
 

@@ -33,7 +33,7 @@ class CompanyController extends Controller
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('create','update'),
-				'users'=>array('@'),
+				'users'=>array('*'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete'),
@@ -64,16 +64,19 @@ class CompanyController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate()
+	public function actionCreate($id_employer)
 	{
 		$model=new Company;
-
+        //TODO: create must get user id from session in future, only after login, or session opened
+        //like $model->id_employer = Yii:app()->user->getId();
+        //
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['Company']))
 		{
 			$model->attributes=$_POST['Company'];
+            $model->id_employer = $id_employer;
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id_company));
 		}

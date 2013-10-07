@@ -13,7 +13,7 @@ class m131007_085120_user extends CDbMigration
                 'name'    => 'varchar(200)',
                 'surname' => 'varchar(200)',
                 'patronymic' => 'varchar(200)',
-                'role' => 'INT UNSIGNED NOT NULL',
+                'role' => 'varchar(200)',
                 'gender'    => 'ENUM("male", "female", "none")',
                 'birth_date'    => 'varchar(20)',
                 'id_country'    => 'INT UNSIGNED',
